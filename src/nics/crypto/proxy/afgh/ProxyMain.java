@@ -160,7 +160,7 @@ public class ProxyMain {
 
         medirTiempoMicroSegundos();
 
-        ElementPowPreProcessing pk_a_ppp = pk_a.pow();
+        ElementPowPreProcessing pk_a_ppp = pk_a.getElementPowPreProcessing();
 
         medirTiempoMicroSegundos();
 
@@ -179,7 +179,7 @@ public class ProxyMain {
 
         medirTiempoMicroSegundos();
 
-        PairingPreProcessing e_ppp = global.getE().pairing(rk_a_b);
+        PairingPreProcessing e_ppp = global.getE().getPairingPreProcessingFromElement(rk_a_b);
 
         medirTiempoMicroSegundos();
 

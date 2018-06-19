@@ -4,12 +4,7 @@
  */
 package nics.crypto.proxy.afgh;
 
-import it.unisa.dia.gas.jpbc.Element;
-import it.unisa.dia.gas.jpbc.ElementPowPreProcessing;
-import it.unisa.dia.gas.jpbc.Field;
-import it.unisa.dia.gas.jpbc.Pairing;
-import it.unisa.dia.gas.jpbc.PairingPreProcessing;
-import java.util.Arrays;
+import it.unisa.dia.gas.jpbc.*;
 import nics.crypto.Tuple;
 
 /**
@@ -30,9 +25,9 @@ public class AFGHProxyReEncryption {
         return Zq.newRandomElement().getImmutable();
     }
 
-//    public static byte[] generateSecretKey(GlobalParameters global) {
-//        return generateSecretKey(global).toBytes();
-//    }
+    //    public static byte[] generateSecretKey(GlobalParameters global) {
+    //        return generateSecretKey(global).toBytes();
+    //    }
     public static Element generatePublicKey(Element sk, AFGHGlobalParameters global) {
 
         ElementPowPreProcessing g = global.getG_ppp();
@@ -62,8 +57,8 @@ public class AFGHProxyReEncryption {
 
     public static byte[] generateReEncryptionKey(byte[] pk_bytes, byte[] sk_bytes, AFGHGlobalParameters global) {
         return generateReEncryptionKey(
-                bytesToElement(pk_bytes, global.getG1()),
-                bytesToElement(sk_bytes, global.getZq())).toBytes();
+            bytesToElement(pk_bytes, global.getG1()),
+            bytesToElement(sk_bytes, global.getZq())).toBytes();
     }
 
     public static byte[] firstLevelEncryption(byte[] message, byte[] pk_a, AFGHGlobalParameters global) {
@@ -132,7 +127,7 @@ public class AFGHProxyReEncryption {
         System.out.println("G2: " + G2.getLengthInBytes());
         // message = m \in G2
         Element m = bytesToElement(message, G2);
-//        System.out.println("M : " + Arrays.toString(m.toBytes()));
+        //        System.out.println("M : " + Arrays.toString(m.toBytes()));
         // pk_a \in G1
         Element pk = bytesToElement(pk_a, G1);
 
@@ -162,7 +157,7 @@ public class AFGHProxyReEncryption {
 
         Element Z = global.getZ();
 
-        
+
 
         // random k \in Zq
         Element k = Zq.newRandomElement().getImmutable();
@@ -175,7 +170,7 @@ public class AFGHProxyReEncryption {
         // c2 = m·Z^k
         Element c2 = m.mul(Z.powZn(k)).getImmutable();
 
-        
+
 
         // c = (c1, c2)
         Tuple c = new Tuple(c1, c2);
@@ -203,7 +198,7 @@ public class AFGHProxyReEncryption {
 
         ElementPowPreProcessing Z_PPP = global.getZ_ppp();
 
-        
+
 
         // random k \in Zq
         Element k = Zq.newRandomElement().getImmutable();
@@ -216,7 +211,7 @@ public class AFGHProxyReEncryption {
         // c2 = m·Z^k
         Element c2 = m.mul(Z_PPP.powZn(k)).getImmutable();
 
-        
+
 
         // c = (c1, c2)
         Tuple c = new Tuple(c1, c2);
@@ -240,7 +235,7 @@ public class AFGHProxyReEncryption {
 
     }
 
-     public static Tuple reEncryption(Tuple c, Element rk, PairingPreProcessing e_ppp) {
+    public static Tuple reEncryption(Tuple c, Element rk, PairingPreProcessing e_ppp) {
 
         /*
          * Re-Encryption
@@ -314,8 +309,8 @@ public class AFGHProxyReEncryption {
 
         Element key = bytesToElement(sk, global.getZq());
 
-//        key.invert();
-//        System.out.println(Arrays.toString(key.invert().toBytes()));
+        //        key.invert();
+        //        System.out.println(Arrays.toString(key.invert().toBytes()));
 
         Element m = firstLevelDecryption(new Tuple(alpha, beta), key, global);
 
@@ -392,7 +387,7 @@ public class AFGHProxyReEncryption {
 
     public static int bytesToElement(byte[] b, Element x, int offset) {
 
-        
+
 
         offset += x.setFromBytes(b, offset);
 
